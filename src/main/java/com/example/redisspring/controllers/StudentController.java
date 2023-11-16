@@ -6,6 +6,8 @@ import com.example.redisspring.repositories.StudentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,5 +25,12 @@ public class StudentController {
         Student student = new Student(UUID.randomUUID().toString(), dto.name(), dto.gender(), dto.grade());
         repository.save(student);
         return ResponseEntity.ok(student);
+    }
+
+    @GetMapping
+    public List<Student> findAllStudents() {
+        List<Student> listStudent = new ArrayList<>();
+        repository.findAll().forEach(student -> listStudent.add(student));
+        return listStudent;
     }
 }
